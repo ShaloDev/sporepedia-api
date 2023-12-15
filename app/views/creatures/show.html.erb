@@ -1,0 +1,26 @@
+<%= render "shared/header"%>
+<img src="<%= SporeScrapper.large_asset_url(params[:id]) %>" alt="Asset Image">
+<% if @stats[:carnivore] == "1.0" %>
+  Carnivore
+<% end %>
+<% if @stats[:herbivore] == "1.0" %>
+  Herbivore
+<% end %>
+<% if @stats[:herbivore] == "1.0" %>
+  Herbivore
+<% end %>
+Health: <%= @stats[:health] %><br>
+Eyes: <%= @stats[:sense] %><br>
+Flying: <%= @stats[:glide] %><br>
+Sprint: <%= @stats[:sprint] %><br>
+Stealth: <%= @stats[:stealth] %><br>
+Bite: <%= @stats[:bite] %><br>
+Chrage: <%= @stats[:chrage] %><br>
+Strike: <%= @stats[:strike] %><br>
+Spit: <%= @stats[:spit] %><br>
+Sing: <%= @stats[:sing] %><br>
+Dance: <%= @stats[:dance] %><br>
+Gesture: <%= @stats[:gesture] %><br>
+Posture: <%= @stats[:posture] %><br>
+<br>
+<%= link_to 'Download', download_creature_path(id: params[:id]) %>

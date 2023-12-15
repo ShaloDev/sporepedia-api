@@ -1,0 +1,42 @@
+<%= render "shared/header"%>
+<% @assets.each do |asset_data| %>
+    <img src="<%= asset_data[:image] %>" alt="Asset Image">
+    ID: <%= asset_data[:id] %><br>
+    Name: <%= asset_data[:name] %><br>
+    Author: <%= asset_data[:author] %><br>
+    Created: <%= asset_data[:created] %><br>
+    <% if asset_data[:description]!='NULL' %>
+        Description: <%= asset_data[:description] %><br>   
+    <% end %> 
+    <%= link_to 'Download', download_creature_path(id: asset_data[:id]) %>
+    <%= link_to 'See stats', creature_path(id: asset_data[:id]) %>
+    <br>
+<% end %>
+
+<%= form_tag(creatures_path, method: 'get') do %>
+  <%= label_tag :search_type, 'Search Type' %>
+  <%= select_tag :search_type, options_for_select([
+      ['Top Rated', 'TOP_RATED'],
+      ['Top Rated New', 'TOP_RATED_NEW'],
+      ['Newest', 'NEWEST'],
+      ['Featured', 'FEATURED'],
+      ['Maxis Made', 'MAXIS_MADE'],
+      ['Random', 'RANDOM'],
+      ['Cute and Creepy', 'CUTE_AND_CREEPY']
+    ])
+  %><br>
+
+  <%= hidden_field_tag :page, params[:page] || 1 %>
+
+  <%= submit_tag 'Search' %>
+<% end %>
+
+<% if @assets.any? %>
+  <% @assets.each do |asset| %>
+  <% end %>
+
+  <%= link_to 'Previous Page', creatures_path(page: params[:page].to_i - 1), method: 'get' if params[:page].to_i > 1 %>
+  <%= link_to 'Next Page', creatures_path(page: params[:page].to_i + 1), method: 'get' %>
+<% else %>
+  <p>No creatures found.</p>
+<% end %>
