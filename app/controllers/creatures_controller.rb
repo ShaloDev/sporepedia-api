@@ -1,6 +1,6 @@
 class CreaturesController < ApplicationController
     def index
-        page = params[:page].to_i || 1
+        page = params[:page].to_i
         per_page = params[:per_page].to_i || 10
         start_index = (page - 1) * per_page
         url = SporeScrapper.asset_search_url(params[:search_type], start_index, per_page)
