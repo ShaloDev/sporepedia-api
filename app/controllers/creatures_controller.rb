@@ -24,7 +24,7 @@ class CreaturesController < ApplicationController
     end
 
     def create
-        @creature = Creature.new(creature_id: creature_params[:id])
+        @creature = Creature.new(creature_params)
 
         if @creature.save
             current_user.creatures << @creature
@@ -44,7 +44,7 @@ class CreaturesController < ApplicationController
     private 
 
     def creature_params
-        params.permit(:authenticity_token, :commit, :id)
+        params.permit(:creature_id, :image, :name, :author, :description, :created)
     end
 
     def set_creature

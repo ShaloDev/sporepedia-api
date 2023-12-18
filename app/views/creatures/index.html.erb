@@ -41,6 +41,17 @@
         Description: <%= asset_data[:description] %><br>   
     <% end %> 
     <%= link_to 'Download', download_creature_path(id: asset_data[:id]) %>
-    <%= link_to 'See stats', creature_path(id: asset_data[:id]) %>    
+    <%= link_to 'See stats', creature_path(id: asset_data[:id]) %>   
+
+    <%= form_with(model: @creature, url: creatures_path, method: :post) do |form| %>
+      <%= form.hidden_field :creature_id, value: asset_data[:id] %>
+      <%= form.hidden_field :image, value: asset_data[:image] %>
+      <%= form.hidden_field :name, value: asset_data[:name] %>
+      <%= form.hidden_field :author, value: asset_data[:author] %>
+      <%= form.hidden_field :created, value: asset_data[:created] %>
+      <%= form.hidden_field :description, value: asset_data[:description] %>
+  
+      <%= form.submit 'Add creature to collection' %>
+    <% end %> 
     <br>
 <% end %>

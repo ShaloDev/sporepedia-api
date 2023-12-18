@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_17_231301) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_18_003627) do
   create_table "creature_saves", force: :cascade do |t|
     t.integer "user_id"
     t.integer "creature_id"
@@ -24,6 +24,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_17_231301) do
     t.integer "creature_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "image"
+    t.string "name"
+    t.string "author"
+    t.text "description"
+    t.string "created"
   end
 
   create_table "users", force: :cascade do |t|
