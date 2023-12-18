@@ -1,27 +1,33 @@
-<%= render "shared/header"%>
-<img src="<%= SporeScrapper.large_asset_url(params[:id]) %>" alt="Asset Image">
-<% if @stats[:carnivore] == "1.0" %>
-  Carnivore
-<% end %>
-<% if @stats[:herbivore] == "1.0" %>
-  Herbivore
-<% end %>
-<% if @stats[:herbivore] == "1.0" %>
-  Herbivore
-<% end %>
-Health: <%= @stats[:health] %><br>
-Eyes: <%= @stats[:sense] %><br>
-Flying: <%= @stats[:glide] %><br>
-Sprint: <%= @stats[:sprint] %><br>
-Stealth: <%= @stats[:stealth] %><br>
-Bite: <%= @stats[:bite] %><br>
-Chrage: <%= @stats[:chrage] %><br>
-Strike: <%= @stats[:strike] %><br>
-Spit: <%= @stats[:spit] %><br>
-Sing: <%= @stats[:sing] %><br>
-Dance: <%= @stats[:dance] %><br>
-Gesture: <%= @stats[:gesture] %><br>
-Posture: <%= @stats[:posture] %><br>
-<br>
+<%= render "shared/header" %>
 
-<%= link_to 'Download', download_creature_path(id: params[:id]) %>
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-6">
+      <img src="<%= SporeScrapper.large_asset_url(params[:id]) %>" alt="Asset Image" class="img-fluid">
+    </div>
+    <div class="col-md-6">
+      <% if @stats[:carnivore] == "1.0" %>
+        <p>Carnivore</p>
+      <% end %>
+      <% if @stats[:herbivore] == "1.0" %>
+        <p>Herbivore</p>
+      <% end %>
+      <p>Health: <%= @stats[:health] %></p>
+      <p>Eyes: <%= @stats[:sense] %></p>
+      <p>Flying: <%= @stats[:glide] %></p>
+      <p>Sprint: <%= @stats[:sprint] %></p>
+      <p>Stealth: <%= @stats[:stealth] %></p>
+      <p>Bite: <%= @stats[:bite] %></p>
+      <p>Charge: <%= @stats[:charge] %></p>
+      <p>Strike: <%= @stats[:strike] %></p>
+      <p>Spit: <%= @stats[:spit] %></p>
+      <p>Sing: <%= @stats[:sing] %></p>
+      <p>Dance: <%= @stats[:dance] %></p>
+      <p>Gesture: <%= @stats[:gesture] %></p>
+      <p>Posture: <%= @stats[:posture] %></p>
+      
+      <br>
+      <%= link_to 'Download', download_creature_path(id: params[:id]), class: "btn btn-primary" %>
+    </div>
+  </div>
+</div>

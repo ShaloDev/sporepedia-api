@@ -73,4 +73,8 @@ group :test do
 
 end
 
+# Authorization
 gem "devise", "~> 4.9"
+
+# Bootstrap
+gem "cssbundling-rails", "~> 1.3"

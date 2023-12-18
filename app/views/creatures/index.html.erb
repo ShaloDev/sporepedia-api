@@ -1,57 +1,69 @@
-<%= render "shared/header"%>
-<%= form_tag(creatures_path, method: 'get') do %>
-  <%= label_tag :search_type, 'Search Type' %>
-  <%= select_tag :search_type, options_for_select([
-      ['Top Rated', 'TOP_RATED'],
-      ['Top Rated New', 'TOP_RATED_NEW'],
-      ['Newest', 'NEWEST'],
-      ['Featured', 'FEATURED'],
-      ['Maxis Made', 'MAXIS_MADE'],
-      ['Random', 'RANDOM'],
-      ['Cute and Creepy', 'CUTE_AND_CREEPY']
-    ])
-  %><br>
+<%= render "shared/header" %>
 
-  <%= hidden_field_tag :page, params[:page] || 1 %>
-  <%= hidden_field_tag :per_page, params[:per_page] || 10 %>
-
-  <%= submit_tag 'Search' %>
+<div class="container mt-4">
+  <%= form_tag(creatures_path, method: 'get', class: "mb-4") do %>
+    <div class="form-group">
+      <%= label_tag :search_type, 'Search Type' %>
+      <%= select_tag :search_type, options_for_select([
+          ['Top Rated', 'TOP_RATED'],
+          ['Top Rated New', 'TOP_RATED_NEW'],
+          ['Newest', 'NEWEST'],
+          ['Featured', 'FEATURED'],
+          ['Maxis Made', 'MAXIS_MADE'],
+          ['Random', 'RANDOM'],
+          ['Cute and Creepy', 'CUTE_AND_CREEPY']
+        ]), class: "form-control"
+      %>
+    </div>
+    <%= hidden_field_tag :page, params[:page] || 1 %>
+    <%= hidden_field_tag :per_page, params[:per_page] || 10 %>
+    <%= submit_tag 'Search', class: "btn btn-primary" %>
+  <% end %>
 
   <% if @assets.any? %>
   <% @assets.each do |asset| %>
   <% end %>
 
-  <%= link_to 'Previous Page', creatures_path(page: params[:page].to_i - 1,
-    search_type: params[:search_type], per_page: params[:per_page]),
-    method: 'get' if params[:page].to_i > 1 %>
-  <%= link_to 'Next Page', creatures_path(page: params[:page].to_i + 1,
-    search_type: params[:search_type], per_page: params[:per_page]), method: 'get' %>
+  <div class="mt-4">
+      <%= link_to 'Previous Page', creatures_path(page: params[:page].to_i - 1,
+        search_type: params[:search_type], per_page: params[:per_page]),
+        method: 'get', class: "btn btn-secondary mr-2" if params[:page].to_i > 1 %>
+      <%= link_to 'Next Page', creatures_path(page: params[:page].to_i + 1,
+        search_type: params[:search_type], per_page: params[:per_page]),
+        method: 'get', class: "btn btn-secondary" %>
+    </div>
   <% else %>
     <p>No creatures found.</p>
   <% end %>
-<% end %>
 
 <% @assets.each do |asset_data| %>
-    <img src="<%= asset_data[:image] %>" alt="Asset Image">
-    ID: <%= asset_data[:id] %><br>
-    Name: <%= asset_data[:name] %><br>
-    Author: <%= asset_data[:author] %><br>
-    Created: <%= asset_data[:created] %><br>
-    <% if asset_data[:description]!='NULL' %>
-        Description: <%= asset_data[:description] %><br>   
-    <% end %> 
-    <%= link_to 'Download', download_creature_path(id: asset_data[:id]) %>
-    <%= link_to 'See stats', creature_path(id: asset_data[:id]) %>   
-
-    <%= form_with(model: @creature, url: creatures_path, method: :post) do |form| %>
-      <%= form.hidden_field :creature_id, value: asset_data[:id] %>
-      <%= form.hidden_field :image, value: asset_data[:image] %>
-      <%= form.hidden_field :name, value: asset_data[:name] %>
-      <%= form.hidden_field :author, value: asset_data[:author] %>
-      <%= form.hidden_field :created, value: asset_data[:created] %>
-      <%= form.hidden_field :description, value: asset_data[:description] %>
-  
-      <%= form.submit 'Add creature to collection' %>
-    <% end %> 
-    <br>
+  <div class="card mb-3">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img src="<%= asset_data[:image] %>" alt="Asset Image" class="img-fluid">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">Name: <%= asset_data[:name] %></h5>
+          <p class="card-text">ID: <%= asset_data[:id] %></p>
+          <p class="card-text">Author: <%= asset_data[:author] %></p>
+          <p class="card-text">Created: <%= asset_data[:created] %></p>
+          <% if asset_data[:description] != 'NULL' %>
+            <p class="card-text">Description: <%= asset_data[:description] %></p>
+          <% end %>
+          <%= link_to 'Download', download_creature_path(id: asset_data[:id]), class: "btn btn-primary mr-2" %>
+          <%= link_to 'See stats', creature_path(id: asset_data[:id]), class: "btn btn-secondary mr-2" %>
+          <%= form_with(model: @creature, url: creatures_path, method: :post) do |form| %>
+            <%= form.hidden_field :creature_id, value: asset_data[:id] %>
+            <%= form.hidden_field :image, value: asset_data[:image] %>
+            <%= form.hidden_field :name, value: asset_data[:name] %>
+            <%= form.hidden_field :author, value: asset_data[:author] %>
+            <%= form.hidden_field :created, value: asset_data[:created] %>
+            <%= form.hidden_field :description, value: asset_data[:description] %>
+            <%= form.submit 'Add creature to collection', class: "btn btn-success" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
 <% end %>

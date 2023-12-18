@@ -1,15 +1,27 @@
-<%= render "shared/header"%>
-<% @assets.each do |asset_data| %>
-    <img src="<%= asset_data[:image] %>" alt="Asset Image">
-    ID: <%= asset_data[:creature_id] %><br>
-    Name: <%= asset_data[:name] %><br>
-    Author: <%= asset_data[:author] %><br>
-    Created: <%= asset_data[:created] %><br>
-    <% if asset_data[:description]!='NULL' %>
-        Description: <%= asset_data[:description] %><br>   
-    <% end %> 
-    <%= link_to 'Download', download_creature_path(id: asset_data[:id]) %>
-    <%= link_to 'See stats', creature_path(id: asset_data[:creature_id]) %>
-    <%= button_to 'Remove from collection', creature_path(asset_data), method: :delete %>
-    <br>
-<% end %>
+<%= render "shared/header" %>
+
+<div class="container mt-4">
+  <% @assets.each do |asset_data| %>
+    <div class="card mb-3">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img src="<%= asset_data[:image] %>" alt="Asset Image" class="img-fluid">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">Name: <%= asset_data[:name] %></h5>
+            <p class="card-text">ID: <%= asset_data[:creature_id] %></p>
+            <p class="card-text">Author: <%= asset_data[:author] %></p>
+            <p class="card-text">Created: <%= asset_data[:created] %></p>
+            <% if asset_data[:description] != 'NULL' %>
+              <p class="card-text">Description: <%= asset_data[:description] %></p>
+            <% end %>
+            <%= link_to 'Download', download_creature_path(id: asset_data[:id]), class: "btn btn-primary mr-2" %>
+            <%= link_to 'See stats', creature_path(id: asset_data[:creature_id]), class: "btn btn-secondary mr-2" %>
+            <%= button_to 'Remove from collection', creature_path(asset_data), method: :delete, class: "btn btn-danger" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
