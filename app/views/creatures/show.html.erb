@@ -23,4 +23,10 @@ Dance: <%= @stats[:dance] %><br>
 Gesture: <%= @stats[:gesture] %><br>
 Posture: <%= @stats[:posture] %><br>
 <br>
+
 <%= link_to 'Download', download_creature_path(id: params[:id]) %>
+
+<%= form_with(url: creatures_path, method: :post) do |form| %>
+  <%= form.hidden_field :id, value: params[:id] %>
+  <%= form.submit 'Add creature to collection' %>
+<% end %>

@@ -1,4 +1,7 @@
 class CreaturesController < ApplicationController
+    before_action :authenticate_user!, only: [:create, :destroy]
+    before_action :set_creature, only: [:destroy]
+
     def index
         page = params[:page].to_i
         per_page = params[:per_page].to_i || 10
@@ -18,5 +21,33 @@ class CreaturesController < ApplicationController
         stats_url = SporeScrapper.stats_for_creature_url(params[:id])
         response = SporeScrapper.fetch_response(stats_url)
         @stats = SporeScrapper.extract_stats(response)
+    end
+
+    def create
+        @creature = Creature.new(creature_id: creature_params[:id])
+
+        if @creature.save
+            current_user.creatures << @creature
+            redirect_to collection_index_path
+        else
+            flash[:notice] = @creature.errors.full_messages.to_sentence
+            redirect_to root_path, status: :unprocessable_entity
+        end
+    end
+
+    def destroy
+        current_user.creature_saves.where(creature_id: @creature.id).destroy_all
+        @creature.destroy
+        redirect_to collection_index_path, status: :see_other
+    end
+
+    private 
+
+    def creature_params
+        params.permit(:authenticity_token, :commit, :id)
+    end
+
+    def set_creature
+        @creature = Creature.find(params[:id])
     end
 end
